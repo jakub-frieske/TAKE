@@ -4,8 +4,11 @@
  */
 package view.backing;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import javax.faces.context.FacesContext;
@@ -22,19 +25,30 @@ public class LoginBean {
     private String password;
     private HtmlSelectBooleanCheckbox acceptCheckbox;
     private HtmlCommandButton loginButton;
+    
     /**
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("pl"));
     }
 
         
     public String login(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle labels = ResourceBundle.getBundle("ApplicationMessages", context.getViewRoot().getLocale());
+
         if (getUsername().equals(getPassword()))
             return "success";
+        else if (username.equals("scott") && password.equals("tiger"))
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, labels.getString("validation.scott"), null)); 
+            return "index";
+        }
         else
             return "failure";
     }
+    
     
     public void activateButton(ValueChangeEvent e){
         

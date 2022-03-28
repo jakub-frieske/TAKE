@@ -10,38 +10,44 @@
         <h:form>
                     
 
-        <p:tabView>
+        <p:tabView  >
             <p:tab title="Form">
-                <p:spinner id="minMax" min="0" max="100" value="#{managedBean.first}" />
+                <p:spinner id="minMax" value="#{managedBean.first}" />
                 +
-                <p:spinner id="minMa2" min="0" max="100" value="#{managedBean.second}" />
+                <p:spinner id="minMa2" value="#{managedBean.second}" />
 
-                <p:commandButton value="Calculate" action="#{managedBean.calculate}" update="result cur_date message" />
+                <p:commandButton value="Calculate" action="#{managedBean.calculate}" 
+                                 update="result cur_date message" 
+                                 style="top:2px; left: 5px; margin-right: 5px;"/>
                 =
                 <h:outputText id="result" value='#{managedBean.result}' />
                 <br />
                 <br />
-                <h:outputText id="cur_date" value="#{managedBean.curr_date}"  />
+                <h:outputText id="cur_date" value="#{managedBean.date}"  />
                 <p:growl id="message" life="2000"/>
             </p:tab>
+            
             <p:tab title="Table">
-                   <p:dataTable var="product" value="#{dtBasicView.products}">
-                        <p:column headerText="Imię">
-                            <h:outputText value="#{product.name}" />
-                        </p:column>
-
-                        <p:column headerText="Nazwisko">
-                            <h:outputText value="#{product.category}" />
-                        </p:column>
-
-                        <p:column headerText="Średnia">
-                            <h:outputText value="#{product.quantity}" />
-                        </p:column>
+                   <p:dataTable var="student" value="#{managedBean.students}" 
+                                allowUnsorting="true" sortMode="multiple"
+                                paginator="true" rows="10"
+                                paginatorTemplate="{CurrentPageReport} 
+                                                            {FirstPageLink} {PreviousPageLink} 
+                                                                                    {PageLinks} 
+                                                                                        {NextPageLink} {LastPageLink}"
+                                currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
+                        <p:column field="name" headerText="Name" filterable="false" sortable="false"/>
+                        <p:column field="surname" headerText="Surname" filterable="false"/>
+                        <p:column field="average" headerText="Average" filterable="false"/>
                     </p:dataTable>
             </p:tab>
-            <p:tab title="Chart">
-
+            
+            <p:tab title="Chart" >
+                    <p:chart type="line" model="#{managedBean.lineModel}" style="height:300px;" widgetVar="sincos" />
+                    <br />
+                    <p:commandButton type="button" value="Reset zoom" onclick="PF('sincos').resetZoom()"/>
             </p:tab>
+            
         </p:tabView>   
         </h:form>
     </h:body>

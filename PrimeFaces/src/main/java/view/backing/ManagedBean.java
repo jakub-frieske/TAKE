@@ -4,6 +4,7 @@
  */
 package view.backing;
 
+import com.github.javafaker.Faker;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,10 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -20,60 +25,78 @@ import javax.faces.context.FacesContext;
 @Named(value = "managedBean")
 @RequestScoped
 public class ManagedBean {
-    public class Student{
-        public String name;
-        public String surname;
-        public String average;
-        public Student(String n,String s,String a){
-            name = n;
-            surname = s;
-            average = a;
-            
-        }
-    }
     
     private List<Student> students;
     private Integer first = 0;
     private Integer second = 0;
     private Integer result = 0;
-    private Date curr_date = new Date();
+    private LineChartModel lineModel ;
 
     
     /**
      * Creates a new instance of ManagedBean
      */
     public ManagedBean() {
-        Random rand = new Random();
+        Faker faker = new Faker();
         students = new ArrayList<>();
-        for ( int i =0 ; i <10; i++){
-            Integer avg = rand.nextInt((5 - 4) + 1) + 4;
-            Student student = new Student("Name" + i.toString(), "Surname"+i.toString() , "5.0");
+        for (int i = 0; i < 100; i++) {
+            String firstName = faker.name().firstName(); 
+            String lastName = faker.name().lastName(); 
+            double random = new Random().nextDouble(); 
+            double SP = 4.0 + (random * (5.0 - 4.0)); 
+            students.add(new Student(firstName, lastName, String.format("%.2f", SP)));
         }
     }
 
     public void calculate(){
         setResult(first + second);
-        String message= first.toString() + '+' + second.toString() + '=' + result.toString();
+        String message= String.format("%d + %d = %d", first, second, result); 
         FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));		
-	
-	
+                new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));	
+    }
+    
+     /**
+     * @return the lineModel
+     */
+    public LineChartModel getLineModel() {        
+        lineModel = new LineChartModel();
+        lineModel.setTitle("Sin/cos");
+        lineModel.setLegendPosition("be");
+        lineModel.setZoom(true);
+        
+        LineChartSeries sine = new LineChartSeries();
+        sine.setLabel("sin(x)");
+        LineChartSeries cosine = new LineChartSeries();
+        cosine.setLabel("cos(x)");
+
+        for (int x = 0; x <= 360; x+=10) {
+            sine.set(x , Math.sin((x*Math.PI/180)));
+            cosine.set(x ,  Math.cos((x / 180.0) * Math.PI));
+        }
+        
+        lineModel.addSeries(sine);
+        lineModel.addSeries(cosine);
+        
+        Axis yAxis = lineModel.getAxis(AxisType.Y);
+        yAxis.setLabel("y");
+        yAxis.setMin(-1.5);
+        yAxis.setMax(1.5);
+        
+        Axis xAxis = lineModel.getAxis(AxisType.X);
+        xAxis.setLabel("x (deg)");
+        xAxis.setMin(0);
+        xAxis.setMax(360);
+        
+        return lineModel;
     }
     
     /**
      * @return the curr_date
      */
-    public Date getCurr_date() {
-        return curr_date;
+    public Date getDate() {
+        return new Date();
     }
-
-    /**
-     * @param curr_date the curr_date to set
-     */
-    public void setCurr_date(Date curr_date) {
-        this.curr_date = new Date();
-    }
-    
+  
     /**
      * @return the first
      */
@@ -115,7 +138,19 @@ public class ManagedBean {
     public void setResult(Integer result) {
         this.result = result;
     }
+
+    /**
+     * @return the students
+     */
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    /**
+     * @param students the students to set
+     */
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
     
 }
-
-

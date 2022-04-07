@@ -16,7 +16,7 @@ public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private LocalDate requestDate;
-    private String requestTex;
+    private String requestText;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -72,15 +72,15 @@ public class Request implements Serializable {
     /**
      * @return the requestText
      */
-    public String getRequestTex() {
-        return requestTex;
+    public String getRequestText() {
+        return requestText;
     }
 
     /**
      * @param requestText the requestTex to set
      */
-    public void setRequestTex(String requestTex) {
-        this.requestTex = requestTex;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
     }
    
 }

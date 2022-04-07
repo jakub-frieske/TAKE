@@ -34,7 +34,7 @@ public class RequestsList {
     public String addRequest() {
         Request req = new Request();
         req.setRequestDate(LocalDate.now());
-        req.setRequestTex(newRequest);
+        req.setRequestText(newRequest);
         requestFacade.create(req);
         setNewRequest("");
         return null;

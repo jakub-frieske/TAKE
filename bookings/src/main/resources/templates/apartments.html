@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Apartments</title>
+</head>
+<body>
+<form th:object="${apartment}" method="post">
+    <label for="name">Name: </label>
+    <input id="name" type="text" required th:field="*{name}"/>
+    <label for="capacity">Capacity: </label>
+    <input id="capacity" type="number"
+           th:field="*{capacity}"/>
+    <input type="submit" value="Add"/>
+
+    <p th:if="${#fields.hasErrors('capacity')}"
+       th:errors="*{capacity}">Capacity Error</p>
+
+</form>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Capacity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="a: ${apartments}">
+        <td th:text="${a.id}">1</td>
+        <td th:text="${a.name}">Fabulous</td>
+        <td th:text="${a.capacity}">4</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

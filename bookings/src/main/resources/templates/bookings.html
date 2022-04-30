@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Bookings</title>
+</head>
+<body>
+<form th:object="${booking}" method="post">
+    <label>Last Name</label>
+    <input type="text" th:field="*{lastName}" required/>
+    <label>First Name</label>
+    <input type="text" th:field="*{firstName}" required/>
+    <label>Number of guests</label>
+    <input type="number" min="1" th:field="*{numGuests}"/>
+    <label>From</label>
+    <input type="date" th:field="*{fromDate}" required/>
+    <label>Number of days</label>
+    <input type="number" min="1" th:field="*{numDays}"/>
+    <input type="submit" value="Add"/>
+    <p th:if="${noApartmentAvailable == true}">
+        No apartment available for the selection criteria
+    </p>
+</form>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Last Name</th>
+        <th>Fist Name</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Number of days</th>
+        <th>Number of guests</th>
+        <th>Apartment</th>
+        <th>Apartment capacity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b: ${bookings}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.lastName}"></td>
+        <td th:text="${b.firstName}"></td>
+        <td th:text="${b.fromDate}"></td>
+        <td th:text="${b.toDate}"></td>
+        <td th:text="${b.numDays}"></td>
+        <td th:text="${b.numGuests}"></td>
+        <td th:text="${b.apartment.name}"></td>
+        <td th:text="${b.apartment.capacity}"></td>
+        <td>
+            <form th:method="delete">
+                <input type="hidden" name="id" th:value="${b.id}"/>
+                <input type="submit" value="delete"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

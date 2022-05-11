@@ -1,8 +1,8 @@
 /JSFLab/target/
 /PrimeFaces/target/
 /Requests/target/
-/Complaints/target/
-/ComplaintsClient/target/
+/RESTful Web Services/Complaints/target/
+/RESTful Web Services/ComplaintsClient/target/
 /MDBLab/nbproject/private/
 /MDBLab/MDBLab-war/nbproject/private/
 /MDBLab/MDBLab-ejb/nbproject/private/

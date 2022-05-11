@@ -1,0 +1,5 @@
+com\mycompany\Complaints\JakartaRestConfiguration.class
+com\mycompany\Complaints\resources\JakartaEE8Resource.class
+service\AbstractFacade.class
+service\ComplaintFacadeREST.class
+entities\Complaint.class

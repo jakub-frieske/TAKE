@@ -1,10 +1,8 @@
 /JSFLab/target/
 /PrimeFaces/target/
 /Requests/target/
-<<<<<<< HEAD
 /Complaints/target/
 /ComplaintsClient/target/
-=======
 /MDBLab/nbproject/private/
 /MDBLab/MDBLab-war/nbproject/private/
 /MDBLab/MDBLab-ejb/nbproject/private/
@@ -14,4 +12,3 @@
 /MDBLab/MDBLab-war/dist/
 /MDBLab/MDBLab-ejb/dist/
 /MDBLab/dist/
->>>>>>> 97819f0346a40a5d117111ffc52d042f1a41dded
